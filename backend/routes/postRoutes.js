@@ -44,6 +44,23 @@ router.post('/', authenticateToken, postController.createPost);
 
 /**
  * @swagger
+ * /posts/admin-only:
+ *   get:
+ *     summary: Отримати пости тільки для адмінів
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Тільки для адмінів
+ *       403:
+ *         description: Немає прав
+ */
+router.get('/admin-only', authenticateToken, allowRoles('admin'), postController.adminOnlyPosts);
+
+
+/**
+ * @swagger
  * /posts:
  *   get:
  *     summary: Отримати всі пости
@@ -133,21 +150,6 @@ router.put('/:id', authenticateToken, postController.updatePost);
  */
 router.delete('/:id', authenticateToken, postController.deletePost);
 
-/**
- * @swagger
- * /posts/admin-only:
- *   get:
- *     summary: Отримати пости тільки для адмінів
- *     tags: [Posts]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Тільки для адмінів
- *       403:
- *         description: Немає прав
- */
-router.get('/admin-only', authenticateToken, allowRoles('admin'), postController.adminOnlyPosts);
 
 
 module.exports = router;

@@ -134,7 +134,8 @@ exports.deleteUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
+
   try {
     const [users] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
     if (users.length === 0) return res.status(404).json({ message: 'User not found' });
@@ -147,14 +148,25 @@ exports.updateUser = async (req, res) => {
       updates.push('username = ?');
       params.push(username);
     }
+
     if (email) {
       updates.push('email = ?');
       params.push(email);
     }
+
     if (password) {
       const hashed = await bcrypt.hash(password, 10);
       updates.push('password = ?');
       params.push(hashed);
+    }
+
+    if (role) {
+      // Проверка прав: только админ может менять роль
+      if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Only admin can change user roles' });
+      }
+      updates.push('role = ?');
+      params.push(role);
     }
 
     if (updates.length === 0) {
@@ -162,7 +174,6 @@ exports.updateUser = async (req, res) => {
     }
 
     params.push(id);
-
     const sql = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
     await pool.query(sql, params);
 
@@ -172,11 +183,15 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+
 exports.getAllUsers = async (req, res) => {
   try {
-    const [users] = await pool.query('SELECT id, username, email, role FROM users');
-    res.json(users);
+    const [users] = await pool.query(
+      'SELECT id, username, email, role FROM users'
+    );
+    res.status(200).json(users);
   } catch (err) {
+    console.error('Error fetching users:', err);
     res.status(500).json({ message: 'Failed to fetch users', error: err.message });
   }
 };
