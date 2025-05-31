@@ -12,7 +12,6 @@ import useSWR, { MutatorCallback, MutatorOptions } from "swr";
 const Page = () => {
 
   const router = useRouter()
-  console.log(process.env.NEXT_PUBLIC_BASE_URL)
   const handlerPost = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/`)

@@ -40,7 +40,7 @@ exports.createPost = async (req, res) => {
   try {
     const [result] = await pool.query(
       `INSERT INTO posts (title, content, isAdminOnly, UserId) VALUES (?, ?, ?, ?)`,
-      [title, content, isAdminOnly ? 1 : 0, req.user.id]
+      [title, content, isAdminOnly === 1 ? 1 : 0, req.user.id]
     );
 
     const [newPostRows] = await pool.query(

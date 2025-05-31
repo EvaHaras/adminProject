@@ -12,16 +12,17 @@ export function isExternalLink(path?: string) {
   return path?.includes('http');
 }
 
-export function getActive(path: string, pathname: string) {
-  if (path === '/' && pathname !== '/') return false;
-  return path ? !!matchPath({ path, end: false }, pathname) : false
-}
-
-
 // export function getActive(path: string, pathname: string) {
 //   if (path === '/' && pathname !== '/') return false;
-//   return path ? !!matchPath({ path, end: true }, pathname) : false;
+//   return path ?  : false;//false;  //path ? !!matchPath({ path, end: false }, pathname) : false;
 // }
+
+
+export function getActive(path: string, pathname: string) {
+  if (path === '/' && pathname !== '/') return false;
+  return path ? !!matchPath({ path, end: false }, pathname) : false;
+}
+
 
 export default function NavSection({ navConfig, isCollapse, ...other }: Props) {
   return (

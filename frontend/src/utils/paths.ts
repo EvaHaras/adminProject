@@ -8,9 +8,6 @@ export const ERROR = '/500';
 
 const ROOT_PASSWORD = path(ROOT_PATH, '/password');
 const ROOT_USERS = path(ROOT_PATH, '/users');
-const ROOT_PARTNERS = path(ROOT_PATH, '/partners');
-const ROOT_PAYMENTS = path(ROOT_PATH, '/payments');
-const ROOT_ROLES = path(ROOT_PATH, '/roles');
 const ROOT_APPLICATIONS = path(ROOT_PATH, '/post');
 
 export const PATH_AUTH = {
@@ -24,27 +21,12 @@ export const PATH_AUTH = {
 export const PATH_DASHBOARD = {
     root: path(ROOT_PATH, '/'),
     users: {
-        root: ROOT_USERS,
+        root: path(ROOT_USERS, `/list`),
         edit: (id: string | number) => path(ROOT_USERS, `/${id}/edit`),
         new: path(ROOT_USERS, '/new'),
     },
-    // partners: {
-    //     root: ROOT_PARTNERS,
-    //     edit: (id: string | number) => path(ROOT_PARTNERS, `/${id}/edit`),
-    //     new: path(ROOT_PARTNERS, '/new'),
-    // },
-    // payments: {
-    //     root: ROOT_PAYMENTS,
-    //     edit: (id: string | number) => path(ROOT_PAYMENTS, `/${id}/edit`),
-    //     new: path(ROOT_PAYMENTS, '/new'),
-    // },
-    // roles: {
-    //     root: ROOT_ROLES,
-    //     edit: (id: string | number) => path(ROOT_ROLES, `/${id}/edit`),
-    //     new: path(ROOT_ROLES, '/new'),
-    // },
     applications: {
-        root: ROOT_APPLICATIONS,
+        root: path(ROOT_APPLICATIONS, `/list`),
         edit: (id: string | number) => path(ROOT_APPLICATIONS, `/${id}/edit`),
         new: path(ROOT_APPLICATIONS, '/new'),
         admin:path(ROOT_APPLICATIONS, '/admin')

@@ -20,7 +20,7 @@ interface Props {
 
 export default function UpdatePostModal({ mutate }: Props) {
     const { isModalOpen, closeModal, data } = useUpdatePostNoodal();
-    const { content, isAdminOnly,role, title, id } = data!
+    const { content, isAdminOnly, title, id } = data!
     const router = useRouter()
     const roles = [{id:1, name:'admin'}, {id:0, name:'user'}]
 
