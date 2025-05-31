@@ -13,7 +13,6 @@ import useSWR from "swr";
 const Page = () => {
 
   const router = useRouter()
-  console.log(process.env.NEXT_PUBLIC_BASE_URL)
   const handlerUser = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/users`)
@@ -37,7 +36,6 @@ const Page = () => {
   )
 
   if (isLoading) return <CircularProgress />
-  console.log(dateList)
 
 
   return (

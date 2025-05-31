@@ -19,7 +19,6 @@ const TableUser = ({ datauser, mutate }: Props) => {
     const handlerDelete = async (id: number) => {
         try {
             const response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/users/${id}`)
-            console.log({ response })
             mutate()
         } catch (error: any) {
             if (error.status == 401) {

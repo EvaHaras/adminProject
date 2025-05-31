@@ -27,11 +27,8 @@ const signIn = async (request: NextRequest) => {
   const cookieStore = cookies();
   (await cookieStore).set('token', response.data.accessToken)
 
-  console.log(response.data.accessToken)
-
   return NextResponse.json('session', { status: 200 });
 };
 
-// export const POST = errorHandler(signIn);
 
 export { signIn as POST }

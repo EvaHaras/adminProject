@@ -48,7 +48,6 @@ export default function UpdateUserModal({ mutate }: Props) {
                     "role": data.role
             }
             )
-            console.log({ response })
             mutate()
             closeModal()
         } catch (error: any) {

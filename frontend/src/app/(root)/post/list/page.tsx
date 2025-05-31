@@ -35,7 +35,6 @@ const Page = () => {
   )
 
   if (isLoading) return <CircularProgress />
-  console.log(postList)
 
 
   return (

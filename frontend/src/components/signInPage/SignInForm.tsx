@@ -38,7 +38,6 @@ const SignIn = () => {
       });
     
 
-      console.log({ response })
       enqueueSnackbar('Вхід успішний', { variant: 'success' });
       if (response) {
         router.push('/')
