@@ -15,7 +15,7 @@ router.post('/forgot-password', authController.forgotPassword);
 
 router.delete('/delete', authenticateToken, authController.deleteUser);
 
-router.get('/users', authenticateToken, allowRoles('admin'), authController.getAllUsers);
+router.get('/users', authenticateToken, authController.getAllUsers);
 router.get('/users/:id', authenticateToken, allowRoles('admin'), authController.getUserById);
 router.put('/users/:id', authenticateToken, allowRoles('admin'), authController.updateUser);
 router.delete('/users/:id', authenticateToken, allowRoles('admin'), authController.deleteUserById);

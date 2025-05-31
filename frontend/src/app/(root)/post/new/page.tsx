@@ -1,8 +1,9 @@
 import { Typography } from "@mui/material"
 
-const Page = () =>{
+
+const Page = () => {
     return(
-        <Typography>application</Typography>
+        <Typography>news</Typography>
     )
 }
 

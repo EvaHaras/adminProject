@@ -1,6 +1,7 @@
 import { Box, List, ListSubheader, styled } from '@mui/material';
 import { NavListRoot } from './NavList';
 import type { NavConfig, NavItem } from './NavItem';
+import { matchPath } from 'react-router-dom';
 
 interface Props {
   navConfig: NavConfig;
@@ -11,17 +12,16 @@ export function isExternalLink(path?: string) {
   return path?.includes('http');
 }
 
-// export function getActive(path: string, pathname: string) {
-//   if (path === '/' && pathname !== '/') return false;
-//   return path ?  : false;//false;  //path ? !!matchPath({ path, end: false }, pathname) : false;
-// }
-
-
 export function getActive(path: string, pathname: string) {
   if (path === '/' && pathname !== '/') return false;
-  return pathname.includes(path); //|| asPath.includes(path);
+  return path ? !!matchPath({ path, end: false }, pathname) : false
 }
 
+
+// export function getActive(path: string, pathname: string) {
+//   if (path === '/' && pathname !== '/') return false;
+//   return path ? !!matchPath({ path, end: true }, pathname) : false;
+// }
 
 export default function NavSection({ navConfig, isCollapse, ...other }: Props) {
   return (

@@ -7,7 +7,6 @@ const { generateAccessToken, generateRefreshToken } = require('../utils/tokenUti
 exports.register = async (req, res) => {
   const { username, email, password, role } = req.body;
   try {
-    // Проверка, есть ли уже пользователь с таким email
     const [existingUsers] = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
     if (existingUsers.length > 0) {
       return res.status(409).json({ message: 'User with this email already exists' });
@@ -143,6 +142,7 @@ exports.updateUser = async (req, res) => {
     const user = users[0];
     const updates = [];
     const params = [];
+
 
     if (username) {
       updates.push('username = ?');

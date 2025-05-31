@@ -38,6 +38,20 @@ export class PostsService {
         });
     }
     /**
+     * Отримати пости тільки для адмінів
+     * @returns any Тільки для адмінів
+     * @throws ApiError
+     */
+    public static getPostsAdminOnly(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/posts/admin-only',
+            errors: {
+                403: `Немає прав`,
+            },
+        });
+    }
+    /**
      * Отримати пост по ID
      * @param id
      * @returns any Пост знайдено
@@ -101,20 +115,6 @@ export class PostsService {
             },
             errors: {
                 403: `Немає доступу`,
-            },
-        });
-    }
-    /**
-     * Отримати пости тільки для адмінів
-     * @returns any Тільки для адмінів
-     * @throws ApiError
-     */
-    public static getPostsAdminOnly(): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/posts/admin-only',
-            errors: {
-                403: `Немає прав`,
             },
         });
     }

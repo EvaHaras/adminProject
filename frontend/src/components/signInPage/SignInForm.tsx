@@ -4,20 +4,19 @@ import { FormProvider, RHFCheckbox, RHFPassword, RHFSelect, RHFTextField } from 
 import { TValidationDataSingIn, validationDataSignIn } from "@components/hook-form/validation/signInRequest"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, MenuItem, Stack, Typography } from "@mui/material"
+import axios from "axios"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { enqueueSnackbar } from "notistack"
 import { useForm } from "react-hook-form"
 
 const SignIn = () => {
   const router = useRouter();
-  const arrayJks = ['jks1', 'jks2', 'jks3']
 
   const methods = useForm<TValidationDataSingIn>({
     defaultValues: {
-      jks: '',
       email: '',
       password: '',
-      rememberMe: false
     },
     resolver: zodResolver(validationDataSignIn)
   })
@@ -27,9 +26,30 @@ const SignIn = () => {
     formState: { isSubmitting, isValid },
   } = methods
 
-  const onSubmit = (data: TValidationDataSingIn) => {
-    console.log({ data })
-    router.push('/');
+  const onSubmit = async (data: TValidationDataSingIn) => {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: '/api/login',
+        data: {
+          "email": data.email,
+          "password": data.password,
+        }
+      });
+    
+
+      console.log({ response })
+      enqueueSnackbar('Вхід успішний', { variant: 'success' });
+      if (response) {
+        router.push('/')
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        enqueueSnackbar('Невірні дані', { variant: 'warning' });
+      } else {
+        enqueueSnackbar('Помилка при вході', { variant: 'error' });
+      }
+    }
   };
 
   return (
@@ -39,11 +59,9 @@ const SignIn = () => {
         <RHFTextField name="email" placeholder="Адреса електронної пошти" />
         <RHFPassword name="password" placeholder="Пароль" />
         <Stack justifyContent={'space-between'} flexDirection={'row'} alignItems={'center'}>
-          <Stack flexDirection={'row'} spacing={0.5} alignItems={'center'}>
-            <RHFCheckbox name={"rememberMe"} />
-            <Typography variant="body2" margin={0}>Запам&#39;ятати мене</Typography>
-          </Stack>
-          <Button sx={{ fontWeight: 600, padding: 0, margin: 0 }} variant="text">Забули пароль?</Button>
+          <Link href={"/forgot-password"} style={{ textDecoration: 'none' }}>
+            <Typography variant="body1" color="primary.main">Забули пароль</Typography>
+          </Link>
         </Stack>
 
         <Button
@@ -57,10 +75,10 @@ const SignIn = () => {
         >
           Увійти
         </Button>
-        <Stack flexDirection={'row'}  gap={1}>
-          <Typography variant="body1">Якщо у Вас ще немає аккаунту</Typography>
-          <Link href={"/registration"} style={{textDecoration:'none'}}>
-            <Typography variant="body1" color="primary.main">зареєструйтесь</Typography>
+        <Stack flexDirection={'row'} gap={1}>
+          <Typography variant="body1">Якщо у Вас ще немає аккаунту?</Typography>
+          <Link href={"/registration"} style={{ textDecoration: 'none' }}>
+            <Typography variant="body1" color="primary.main">Зареєструйтесь</Typography>
           </Link>
         </Stack>
       </Stack>

@@ -6,7 +6,7 @@ const getIcon = (name: string) => (
   <SvgIcon src={`/assets/icons/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
 
-const ICONS = {
+export const ICONS = {
   blog: getIcon('ic_blog'),
   settings: getIcon('ic_settings'),
   cart: getIcon('ic_cart'),
@@ -26,7 +26,7 @@ const ICONS = {
   file: getIcon('ic_file'),
 };
 
-const navConfig = (): NavConfig => [
+export const navConfig = (): NavConfig => [
   {
     subheader: '',
     items: [{ title: 'Home', path: PATH_DASHBOARD.root, icon: ICONS.analytics }],
@@ -35,40 +35,22 @@ const navConfig = (): NavConfig => [
     subheader: 'Control',
     items: [
       {
-        title: 'Users',
+        title: 'Користувачі',
         path: PATH_DASHBOARD.users.root,
         icon: ICONS.user,
         children: [
-          { title: 'List', path: PATH_DASHBOARD.users.root },
-          { title: 'Create', path: PATH_DASHBOARD.users.new },
+          { title: 'Список користувачів', path: PATH_DASHBOARD.users.root },
         ],
       },
       {
-        title: 'Applications',
+        title: 'Пости',
         path: PATH_DASHBOARD.applications.root,
         icon: ICONS.dashboard,
         children: [
-          { title: 'List', path: PATH_DASHBOARD.applications.root },
-          { title: 'Create', path: PATH_DASHBOARD.applications.new },
+          { title: 'Список всіх постів', path: PATH_DASHBOARD.applications.root },
+          { title: 'Створити пост', path: PATH_DASHBOARD.applications.new },
+          { title: 'Пости для адміністраторів', path: PATH_DASHBOARD.applications.admin },
         ],
-      },
-      {
-        title: 'Roles',
-        path: PATH_DASHBOARD.roles.root,
-        icon: ICONS.job,
-        children: [{ title: 'List', path: PATH_DASHBOARD.roles.root }],
-      },
-      {
-        title: 'Partners',
-        path: PATH_DASHBOARD.partners.root,
-        icon: ICONS.ecommerce,
-        children: [{ title: 'List', path: PATH_DASHBOARD.partners.root }],
-      },
-      {
-        title: 'Payments',
-        path: PATH_DASHBOARD.payments.root,
-        icon: ICONS.invoice,
-        children: [{ title: 'List', path: PATH_DASHBOARD.payments.root }],
       },
     ],
   },
